@@ -2,23 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1b1b2f" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>219-Empire — Prototype</title>
+  <link rel="manifest" href="manifest.json">
   <style>
-    body { margin:0; background:#1b1b2f; color:#fff; font-family: Arial, Helvetica, sans-serif; }
-    #game-container { width:100%; height:100vh; display:flex; align-items:center; justify-content:center; }
-    #info { position: absolute; top: 8px; left: 8px; z-index: 10; }
-    .btn { background:#f5c518; color:#000; padding:8px 12px; border-radius:6px; cursor:pointer; }
+    :root { --btn-bg: #f5c518; --btn-fg: #000; }
+    html,body { height:100%; margin:0; padding:0; background:#1b1b2f; color:#fff; font-family: Arial, Helvetica, sans-serif; }
+    #game-container { width:100%; height:100vh; display:block; }
+    #info { position: absolute; left: 8px; bottom: 8px; z-index: 20; display:flex; flex-direction:column; gap:8px; align-items:flex-start; }
+    .hud-row { display:flex; gap:8px; align-items:center; }
+    .btn { background:var(--btn-bg); color:var(--btn-fg); padding:12px 18px; border-radius:10px; cursor:pointer; font-weight:700; font-size:16px; border:none; box-shadow:0 2px 0 rgba(0,0,0,0.2); }
+    .btn:disabled { opacity:0.6; cursor:default; }
+    #coin-count { font-weight:700; font-size:18px; color:#fff; background:rgba(0,0,0,0.25); padding:6px 10px; border-radius:8px; }
+
+    /* Make controls larger on small screens */
+    @media (max-width:600px) {
+      .btn { padding:16px 22px; font-size:20px; border-radius:12px; }
+      #coin-count { font-size:20px; padding:8px 12px; }
+    }
   </style>
 </head>
 <body>
   <div id="info">
-    <div>Coins: <span id="coin-count">0</span></div>
-    <div><button id="spin-btn" class="btn">Spin</button> <button id="buy-btn" class="btn">Buy Lighthouse (100)</button></div>
+    <div class="hud-row">Coins: <span id="coin-count">0</span></div>
+    <div class="hud-row"><button id="spin-btn" class="btn">Spin</button> <button id="buy-btn" class="btn">Buy Lighthouse (100)</button></div>
   </div>
   <div id="game-container"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
   <script src="src/main.js"></script>
+  <script>
+    // Register service worker (simple PWA support)
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(err => console.log('SW register failed:', err));
+    }
+  </script>
 </body>
 </html>

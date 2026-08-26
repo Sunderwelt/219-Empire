@@ -1,0 +1,11 @@
+{
+  "name": "219-Empire",
+  "short_name": "219Empire",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#1b1b2f",
+  "theme_color": "#1b1b2f",
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png" }
+  ]
+}
